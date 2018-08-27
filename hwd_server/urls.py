@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^users/$', views.getAllUser),
     url(r'^account/register', views.register),
     url(r'^account/login', views.login),
+    url(r'^account/findPassword', views.findPassword)
 ]

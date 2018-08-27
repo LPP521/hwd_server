@@ -24,7 +24,7 @@ def getAllUser(request):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
-
+#注册
 @api_view(['POST'])
 def register(request):
     dict = get_parameter_dic(request)
@@ -43,7 +43,7 @@ def register(request):
         user.save()
         return baseResponse(200, '', '注册成功')
     return Response(UserSerializer(user).data, status=200)
-
+#登录
 @api_view(['POST'])
 def login(request):
     dict = get_parameter_dic(request)
@@ -58,7 +58,21 @@ def login(request):
     except User.DoesNotExist:
         return baseResponse(200, None, '用户不存在')
     return Response('')
-
+#重置密码
+@api_view(['POST'])
+def findPassword(request):
+    dict = get_parameter_dic(request)
+    phone = dict.get('phone', '')
+    password = dict.get('password', '')
+    confirmPassword = dict.get('confirmPassword')
+    try:
+        user = User.objects.get(phone=phone)
+        if password == confirmPassword:
+            user.password = password
+            user.save()
+            return baseResponse(200, None, '密码修改成功')
+    except:
+        return baseResponse(200, None, '用户不存在')
 #获取参数
 def get_parameter_dic(request, *args, **kwargs):
     if isinstance(request, Request) == False:
