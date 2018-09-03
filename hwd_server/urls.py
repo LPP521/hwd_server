@@ -16,11 +16,13 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from account import views
+from product.views import getBannerList
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^users/$', views.getAllUser),
     url(r'^account/register', views.register),
     url(r'^account/login', views.login),
-    url(r'^account/findPassword', views.findPassword)
+    url(r'^account/findPassword', views.findPassword),
+    url(r'^product/getBannerList', getBannerList)
 ]
