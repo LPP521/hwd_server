@@ -21,8 +21,8 @@ from product.views import getBannerList
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^users/$', views.getAllUser),
-    url(r'^account/register', views.register),
-    url(r'^account/login', views.login),
-    url(r'^account/findPassword', views.findPassword),
-    url(r'^product/getBannerList', getBannerList)
+    url(r'^api/account/register', views.register),
+    url(r'^api/account/login', views.login),
+    url(r'^api/account/findPassword', views.findPassword),
+    url(r'^api/product/getBannerList', getBannerList)
 ]
