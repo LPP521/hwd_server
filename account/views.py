@@ -24,6 +24,12 @@ def getAllUser(request):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+
+@api_view(['POST'])
+def getAuthCode(request):
+    dict = get_parameter_dic(request)
+    phone = dict.get('phone')
+    return baseResponse(200, None, '获取验证码成功')
 #注册
 @api_view(['POST'])
 def register(request):
@@ -52,11 +58,11 @@ def login(request):
     try:
         user = User.objects.get(phone=phone)
         if password == user.password:
-            return baseResponse(200, UserSerializer(user).data, '登录成功')
+            return baseResponse(200, None, '登录成功')
         else:
-            return baseResponse(200, None, '密码错误')
+            return baseResponse(201, None, '密码错误')
     except User.DoesNotExist:
-        return baseResponse(200, None, '用户不存在')
+        return baseResponse(202, None, '用户不存在')
     return Response('')
 #重置密码
 @api_view(['POST'])
