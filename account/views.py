@@ -11,19 +11,15 @@ from account.base import baseResponse
 
 # Create your views here.
 @api_view(['GET'])
-def getAllUser(request):
+def getUserInfo(request):
+    dict = get_parameter_dic(request)
+    phone = dict.get('phone')
     if request.method == 'GET':
-        user = User.objects.all()
-        serializer = UserSerializer(user, many=True)
-        return Response(serializer.data)
-
-    elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = UserSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+        try:
+         user = User.objects.filter(phone=phone)
+         return  baseResponse(200, UserSerializer(user).data, '获取用户信息成功')
+        except User.DoesNotExist:
+            return baseResponse(201, None, '用户不存在')
 
 @api_view(['POST'])
 def getAuthCode(request):

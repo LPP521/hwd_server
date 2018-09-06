@@ -20,7 +20,7 @@ from product.views import getBannerList,getCategoryList
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^users/$', views.getAllUser),
+    url(r'^api/account/getUserInfo', views.getUserInfo),
     url(r'^api/account/register', views.register),
     url(r'^api/account/login', views.login),
     url(r'^api/account/findPassword', views.findPassword),
