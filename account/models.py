@@ -5,7 +5,7 @@ from django.db import models
 
 # Create your models here.
 class User(models.Model):
-    user_token = models.CharField(max_length=100)
+    user_token = models.CharField(max_length=100, default='')
     phone = models.CharField(max_length=13)
     password = models.CharField(max_length=24)
     avatar_url = models.CharField(max_length=200, default='')

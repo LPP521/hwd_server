@@ -13,10 +13,10 @@ from account.base import baseResponse
 @api_view(['GET'])
 def getUserInfo(request):
     dict = get_parameter_dic(request)
-    phone = dict.get('phone')
+    userToken = dict.get('token')
     if request.method == 'GET':
         try:
-         user = User.objects.filter(phone=phone)
+         user = User.objects.get(user_token=userToken)
          return  baseResponse(200, UserSerializer(user).data, '获取用户信息成功')
         except User.DoesNotExist:
             return baseResponse(201, None, '用户不存在')
@@ -51,10 +51,11 @@ def login(request):
     dict = get_parameter_dic(request)
     phone = dict.get('phone', '')
     password = dict.get('password', '')
+    print 'phoen is '+phone
     try:
         user = User.objects.get(phone=phone)
         if password == user.password:
-            return baseResponse(200, None, '登录成功')
+            return baseResponse(200, user.user_token, '登录成功')
         else:
             return baseResponse(201, None, '密码错误')
     except User.DoesNotExist:
@@ -64,8 +65,8 @@ def login(request):
 @api_view(['POST'])
 def findPassword(request):
     dict = get_parameter_dic(request)
-    phone = dict.get('phone', '')
-    password = dict.get('password', '')
+    phone = dict.get('phone')
+    password = dict.get('password')
     confirmPassword = dict.get('confirmPassword')
     try:
         user = User.objects.get(phone=phone)
