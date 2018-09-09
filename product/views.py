@@ -1,16 +1,24 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from rest_framework.decorators import api_view
-from account.base import baseResponse
-from product.serializers import BannerSerializers,CategorySerializers
-from product.models import Banner,Category
+from account.base import baseResponse,get_parameter_dic
+from product.serializers import HomeCategorySerializers, BannerSerializers, CategorySerializers
+from product.models import HomeCategory, Banner, Category
 # Create your views here.
 
 @api_view(['GET'])
 def getBannerList(request):
-    banners = Banner.objects.all()
+    typeId = get_parameter_dic(request).get('typeId')
+    if typeId == None:
+        return baseResponse(201, None, 'typeId不能为空')
+    banners = Banner.objects.filter(typeId=typeId)
     serializer = BannerSerializers(banners, many=True)
     return baseResponse(200, serializer.data, 'success')
+
+@api_view(['GET'])
+def getHomeCategory(request):
+    homeCategorys = HomeCategory.objects.all()
+    return baseResponse(200, HomeCategorySerializers(homeCategorys, many=True).data, 'success')
 
 @api_view(['GET'])
 def getCategoryList(request):
