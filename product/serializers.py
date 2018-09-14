@@ -1,7 +1,5 @@
 from rest_framework import serializers
-from product.models import HomeCategory
-from product.models import Banner
-from product.models import Category
+from product.models import HomeCategory,Banner,Category,Product
 
 class HomeCategorySerializers(serializers.ModelSerializer):
     class Meta:
@@ -17,3 +15,8 @@ class CategorySerializers(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('index', 'categoryId', 'categoryName')
+
+class ProductSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ('imageUrl', 'productType', 'productTitle', 'productPrice', 'discountPrice', 'salesCount', 'couponCount', 'commission')

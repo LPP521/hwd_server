@@ -5,4 +5,5 @@ urlpatterns = [
     url(r'^product/getHomeCategory', views.getHomeCategory),
     url(r'^product/getBannerList', views.getBannerList),
     url(r'^product/getCategoryList', views.getCategoryList),
+    url(r'^product/getProductList', views.getProductList)
 ]
