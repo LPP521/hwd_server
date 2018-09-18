@@ -2,8 +2,8 @@
 from __future__ import unicode_literals
 from rest_framework.decorators import api_view
 from account.base import baseResponse,get_parameter_dic
-from product.serializers import HomeCategorySerializers, BannerSerializers, CategorySerializers,ProductSerializers
-from product.models import HomeCategory, Banner, Category, Product
+from product.serializers import HomeCategorySerializers, BannerSerializers, MenuSerializers, CategorySerializers,ProductSerializers
+from product.models import HomeCategory, Banner, Menu, Category, Product
 # Create your views here.
 
 @api_view(['GET'])
@@ -14,6 +14,12 @@ def getBannerList(request):
     banners = Banner.objects.filter(typeId=typeId)
     serializer = BannerSerializers(banners, many=True)
     return baseResponse(200, serializer.data, 'success')
+
+@api_view(['GET'])
+def getMenuByType(request):
+    typeId = get_parameter_dic(request).get('typeId')
+    menus = Menu.objects.filter(typeId=typeId)
+    return baseResponse(200, MenuSerializers(menus, many=True).data, 'success')
 
 @api_view(['GET'])
 def getHomeCategory(request):
